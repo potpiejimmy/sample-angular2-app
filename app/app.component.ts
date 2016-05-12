@@ -1,29 +1,34 @@
-﻿import { Component } from '@angular/core';
-import { Http, HTTP_PROVIDERS } from '@angular/http';
+import { Component } from '@angular/core';
+import 'rxjs/Rx';
+import { PrincipalService } from './principal.service';
 
 @Component({
   selector: 'app',
-  providers: [HTTP_PROVIDERS],
   template: `
-    <h1>Result:</h1>
-    <h3>{{dynresult}}</h3>
+    <h1>Addresses:</h1>
+    <h3>{{label}}</h3>
+    <ul>  
+      <li *ngFor="let user of users">
+        {{ user.mail }}
+      </li>
+    <ul>
   `
 })
-export class AppComponent implements OnInit {
-    dynresult = 'Loading details...';
+export class AppComponent {
+    label = 'Loading data...';
+    users = [];
 
-    constructor(private http: Http) { }
+    constructor(private principalService : PrincipalService) { }
 
     ngOnInit() {
         this.loadDetails();
     }
 
     loadDetails() {
-        this.http.get('/rest/dummydata.json')
-          .subscribe(
-            res => { this.dynresult = res.json()['mail']},
-            err => console.error(err),
-            () => console.log('done')
-        );
+        this.principalService.getUsers(
+            res => {
+                this.users = res;
+                this.label = '';
+            });
     }
 }

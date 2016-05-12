@@ -1,1 +1,4 @@
-{"mail":"dummy@mail.com"}
+[
+    {"mail":"dummy@mail.com"},
+    {"mail":"ich@hier.de"}
+]
