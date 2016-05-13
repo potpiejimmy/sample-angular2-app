@@ -9,7 +9,7 @@ export class PrincipalService {
 
     getUsers(consumer) {
         return this.http.get('/rest/dummydata.json')
-          .map(res => res.json())
+          .map(res => res.text())
           .toPromise()
           .then(consumer);
     }

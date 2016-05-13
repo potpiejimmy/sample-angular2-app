@@ -1,21 +1,17 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
 import { PrincipalService } from './principal.service';
+import { DataTable } from 'primeng/primeng';
+import { Column } from 'primeng/primeng';
 
 @Component({
   selector: 'app',
-  template: `
-    <h1>Addresses:</h1>
-    <h3>{{label}}</h3>
-    <ul>  
-      <li *ngFor="let user of users">
-        {{ user.mail }}
-      </li>
-    <ul>
-  `
+  directives: [DataTable,Column],
+  templateUrl: 'app/app.html'
 })
 export class AppComponent {
     label = 'Loading data...';
+    data = null;
     users = [];
 
     constructor(private principalService : PrincipalService) { }
@@ -27,8 +23,9 @@ export class AppComponent {
     loadDetails() {
         this.principalService.getUsers(
             res => {
-                this.users = res;
-                this.label = '';
+                this.data = res;
+                this.users = JSON.parse(res);
+                this.label = 'Received:';
             });
     }
 }
