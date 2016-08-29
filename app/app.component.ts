@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { PrincipalService } from './principal.service';
-import { DataTable } from 'primeng/primeng';
-import { Column } from 'primeng/primeng';
 
 @Component({
   selector: 'app',
-  directives: [DataTable,Column],
-  templateUrl: 'app/app.html'
+  templateUrl: 'app/app.html',
+  providers: [ HTTP_PROVIDERS, PrincipalService ]
 })
 export class AppComponent {
     label = 'Loading data...';
