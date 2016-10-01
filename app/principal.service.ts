@@ -7,10 +7,10 @@ export class PrincipalService {
 
     constructor (private http: Http) {}
 
-    getUsers(consumer) {
-        return this.http.get('/rest/dummydata.json')
-          .map(res => res.text())
+    getStatus(callback) {
+        return this.http.get('/pcsc/status')
+          .map(res => res.json())
           .toPromise()
-          .then(consumer);
+          .then(callback);
     }
 }

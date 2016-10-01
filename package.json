@@ -7,7 +7,8 @@
     "postinstall": "typings install",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "pcsc": "tsc && node server/app.js"
   },
   "license": "ISC",
   "dependencies": {
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "concurrently": "^3.0.0",
+    "express": "^4.14.0",
     "lite-server": "^2.2.2",
     "typescript": "^2.0.3",
     "typings": "^1.4.0"

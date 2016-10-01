@@ -1,14 +1,21 @@
-<h1>Angular 2 Demo Page</h1>
-<h3>{{label}}</h3>
-{{ data }}
-<h3>List</h3>
-<ul>  
-  <li *ngFor="let user of users">
-    {{ user.mail }}
-  </li>
-</ul>
-<h3>Datatable example:</h3>
-<p-dataTable [value]="users">
-    <p-column field="name" header="Name"></p-column>
-    <p-column field="mail" header="Mail"></p-column>
-</p-dataTable>
+<p-fieldset legend="Online Banking">
+  <form id="loginform">
+
+      <table>
+          <tr>
+              <td>User name:</td>
+              <td><input type="text" name="user" pInputText [(ngModel)]="user"/></td>
+          </tr>
+          <tr>
+              <td>Password:</td>
+              <td><input type="password" name="password" pPassword [(ngModel)]="password"/></td>
+          </tr>
+      </table>
+  
+      <p></p>
+      <button pButton type="submit" label="Anmelden" (click)="login()" icon="fa-sign-in"></button>
+
+      <p-messages [value]="messages"></p-messages>
+
+  </form>
+</p-fieldset>

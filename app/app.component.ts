@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
 import { PrincipalService } from './principal.service';
+import { Message }  from 'primeng/primeng';
 
 @Component({
   selector: 'app',
@@ -8,9 +9,7 @@ import { PrincipalService } from './principal.service';
   providers: [ PrincipalService ]
 })
 export class AppComponent {
-    label = 'Loading data...';
-    data = null;
-    users = [];
+    messages: Message[];
 
     constructor(private principalService : PrincipalService) { }
 
@@ -19,11 +18,11 @@ export class AppComponent {
     }
 
     loadDetails() {
-        this.principalService.getUsers(
+        this.principalService.getStatus(
             res => {
-                this.data = res;
-                this.users = JSON.parse(res);
-                this.label = 'Received:';
+                this.messages = [];
+                this.messages.push(res);
+                this.loadDetails();
             });
     }
 }
