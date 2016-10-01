@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
 import 'rxjs/Rx';
-import { HTTP_PROVIDERS } from '@angular/http';
 import { PrincipalService } from './principal.service';
 
 @Component({
   selector: 'app',
   templateUrl: 'app/app.html',
-  providers: [ HTTP_PROVIDERS, PrincipalService ]
+  providers: [ PrincipalService ]
 })
 export class AppComponent {
     label = 'Loading data...';
