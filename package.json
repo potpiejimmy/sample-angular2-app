@@ -8,7 +8,7 @@
     "tsc": "tsc",
     "tsc:w": "tsc -w",
     "typings": "typings",
-    "pcsc": "tsc && node server/app.js"
+    "express": "tsc && node server/app.js"
   },
   "license": "ISC",
   "dependencies": {

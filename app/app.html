@@ -3,11 +3,15 @@
 
       <table>
           <tr>
-              <td>User name:</td>
-              <td><input type="text" name="user" pInputText [(ngModel)]="user"/></td>
+              <td>Kontonummer/Teilnehmernummer:</td>
+              <td><input type="text" name="ktonr" pInputText [(ngModel)]="card.ktonr"/></td>
           </tr>
           <tr>
-              <td>Password:</td>
+              <td>Bankleitzahl:</td>
+              <td><input type="text" name="blz" pInputText [(ngModel)]="card.blz"/></td>
+          </tr>
+          <tr>
+              <td>Passwort:</td>
               <td><input type="password" name="password" pPassword [(ngModel)]="password"/></td>
           </tr>
       </table>

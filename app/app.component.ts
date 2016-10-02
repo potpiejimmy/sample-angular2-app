@@ -10,19 +10,33 @@ import { Message }  from 'primeng/primeng';
 })
 export class AppComponent {
     messages: Message[];
+    card: any = { ktonr: null, blz: null };
 
     constructor(private principalService : PrincipalService) { }
 
     ngOnInit() {
-        this.loadDetails();
+        this.pollStatus();
     }
 
-    loadDetails() {
+    pollStatus() {
         this.principalService.getStatus(
             res => {
                 this.messages = [];
                 this.messages.push(res);
-                this.loadDetails();
-            });
+                if (res.severity != "error") {
+                    this.pollStatus();
+                    if (res.severity == "success")
+                        this.readCard();
+                    else
+                        this.card = { ktonr: null, blz: null };
+                }
+            }
+        );
+    }
+
+    readCard() {
+        this.principalService.readCard(
+            res => { this.card = res; }
+        );
     }
 }
