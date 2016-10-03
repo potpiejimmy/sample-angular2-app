@@ -10,7 +10,7 @@ import { Message }  from 'primeng/primeng';
 })
 export class AppComponent {
     messages: Message[];
-    card: any = { ktonr: null, blz: null };
+    card: any = {};
 
     constructor(private principalService : PrincipalService) { }
 
@@ -28,7 +28,7 @@ export class AppComponent {
                     if (res.severity == "success")
                         this.readCard();
                     else
-                        this.card = { ktonr: null, blz: null };
+                        this.card = {};
                 }
             }
         );
