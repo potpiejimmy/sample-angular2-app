@@ -3,16 +3,20 @@
 
       <table>
           <tr>
-              <td>Kontonummer/Teilnehmernummer:</td>
-              <td><input type="text" name="ktonr" pInputText [(ngModel)]="card.ktonr"/></td>
+              <td>Filiale</td>
+              <td>Konto</td>
+              <td>Unterkonto</td>
           </tr>
           <tr>
-              <td>Bankleitzahl:</td>
-              <td><input type="text" name="blz" pInputText [(ngModel)]="card.blz"/></td>
+              <td><input #branchInputField type="text" name="branch" pInputText [(ngModel)]="card.branch" size="3"/></td>
+              <td><input type="text" name="shortaccount" pInputText [(ngModel)]="card.shortaccount" size="7"/></td>
+              <td><input type="text" name="subaccount" pInputText [(ngModel)]="card.subaccount" size="2"/></td>
           </tr>
           <tr>
-              <td>Passwort:</td>
-              <td><input type="password" name="password" pPassword [(ngModel)]="password"/></td>
+              <td>PIN:</td>
+          </tr>
+          <tr>
+              <td><input #pinInputField type="password" name="pin" pInputText [(ngModel)]="pin" size="5"/></td>
           </tr>
       </table>
   

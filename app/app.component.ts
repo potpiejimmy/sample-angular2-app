@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import 'rxjs/Rx';
 import { PrincipalService } from './principal.service';
 import { Message }  from 'primeng/primeng';
 
 @Component({
   selector: 'app',
-  templateUrl: 'app/app.html',
-  providers: [ PrincipalService ]
+  templateUrl: 'app/app.html'
 })
 export class AppComponent {
+
+    @ViewChild('branchInputField') branchInputField; 
+    @ViewChild('pinInputField') pinInputField; 
+
     messages: Message[];
     card: any = {};
 
@@ -25,10 +28,12 @@ export class AppComponent {
                 this.messages.push(res);
                 if (res.severity != "error") {
                     this.pollStatus();
-                    if (res.severity == "success")
+                    if (res.severity == "success") {
                         this.readCard();
-                    else
+                    } else {
                         this.card = {};
+                        this.branchInputField.nativeElement.focus();
+                    }
                 }
             }
         );
@@ -36,7 +41,10 @@ export class AppComponent {
 
     readCard() {
         this.principalService.readCard(
-            res => { this.card = res; }
+            res => { 
+                this.card = res;
+                this.pinInputField.nativeElement.focus();
+            }
         );
     }
 }
