@@ -5,20 +5,24 @@ import 'rxjs/Rx';
 @Injectable()
 export class PrincipalService {
 
-    URL = 'http://localhost:3004/';
+    URL = 'localhost:3004/';
 
     constructor (private http: Http) {}
 
     doGet(url, callback) {
-        return this.http.get(this.URL+url)
+        return this.http.get('http://'+this.URL+url)
           .subscribe(
               res => callback(res.json()),
               err => callback()
            );
     }
 
-    getStatus(callback) {
-        this.doGet('status', callback);
+    onStatus(callback) {
+        var ws = new WebSocket('ws://'+this.URL+'status');
+        ws.onmessage = event => {
+            console.log('RECEIVED' + event.data);
+            callback(JSON.parse(event.data));
+        };
     }
 
     readCard(callback) {
