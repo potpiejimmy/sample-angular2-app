@@ -1,6 +1,7 @@
 nbproject
 node_modules
 typings
+.typingsrc
 *.log
 app/*.js
 app/*.js.map
