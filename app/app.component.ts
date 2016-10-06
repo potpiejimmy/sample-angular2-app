@@ -14,6 +14,7 @@ export class AppComponent {
 
     messages: Message[];
     card: any = {};
+    lastPoll;
 
     constructor(private principalService : PrincipalService) { }
 
@@ -22,17 +23,27 @@ export class AppComponent {
     }
 
     pollStatus() {
+        this.lastPoll = Date.now();
         this.principalService.getStatus(
             res => {
                 this.messages = [];
-                this.messages.push(res);
-                if (res.severity != "error") {
-                    this.pollStatus();
-                    if (res.severity == "success") {
-                        this.readCard();
+                if (res) {
+                    this.messages.push(res);
+                    if (res.severity != "error") {
+                        this.pollStatus();
+                        if (res.severity == "success") {
+                            this.readCard();
+                        } else {
+                            this.card = {};
+                            this.branchInputField.nativeElement.focus();
+                        }
+                    }
+                } else {
+                    // error condition:
+                    if (Date.now() - this.lastPoll < 3000) {
+                        this.messages.push({severity:"error",summary:"Error",detail:"Could not connect to card service."});
                     } else {
-                        this.card = {};
-                        this.branchInputField.nativeElement.focus();
+                        this.pollStatus();
                     }
                 }
             }
@@ -40,10 +51,13 @@ export class AppComponent {
     }
 
     readCard() {
+        console.log("READ CARD");
         this.principalService.readCard(
             res => { 
-                this.card = res;
-                this.pinInputField.nativeElement.focus();
+                if (res) {
+                    this.card = res;
+                    this.pinInputField.nativeElement.focus();
+                }
             }
         );
     }

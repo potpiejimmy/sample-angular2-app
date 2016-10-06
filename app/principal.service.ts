@@ -9,15 +9,19 @@ export class PrincipalService {
 
     constructor (private http: Http) {}
 
+    doGet(url, callback) {
+        return this.http.get(this.URL+url)
+          .subscribe(
+              res => callback(res.json()),
+              err => callback()
+           );
+    }
+
     getStatus(callback) {
-        return this.http.get(this.URL+'status')
-          .map(res => res.json()).toPromise()
-          .then(callback);
+        this.doGet('status', callback);
     }
 
     readCard(callback) {
-        return this.http.get(this.URL+'card')
-          .map(res => res.json()).toPromise()
-          .then(callback);
+        this.doGet('card', callback);
     }
 }
