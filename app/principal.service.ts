@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/Rx';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class PrincipalService {
@@ -9,23 +10,32 @@ export class PrincipalService {
 
     constructor (private http: Http) {}
 
-    doGet(url, callback) {
+    doGet(url) {
         return this.http.get('http://'+this.URL+url)
-          .subscribe(
-              res => callback(res.json()),
-              err => callback()
-           );
+               .map(res => res.json())
+               .toPromise();
     }
 
-    onStatus(callback) {
-        var ws = new WebSocket('ws://'+this.URL+'status');
-        ws.onmessage = event => {
-            console.log('RECEIVED' + event.data);
-            callback(JSON.parse(event.data));
-        };
+    onEvent(url) {
+        let ws = new WebSocket('ws://'+this.URL+url);
+        return new Observable(observer => {
+            ws.onmessage = event => {
+                observer.next(JSON.parse(event.data));
+            };
+            ws.onerror = err => {
+                observer.error(err);
+            };
+            ws.onclose = () => {
+                observer.complete();
+            }
+        });
     }
 
-    readCard(callback) {
-        this.doGet('card', callback);
+    onStatus() {
+        return this.onEvent('status');
+    }
+
+    readCard() {
+        return this.doGet('card');
     }
 }

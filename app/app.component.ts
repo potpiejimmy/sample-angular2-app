@@ -18,11 +18,12 @@ export class AppComponent {
     constructor(private principalService : PrincipalService) { }
 
     ngOnInit() {
-        this.principalService.onStatus(
+        this.principalService.onStatus().subscribe(
             res => {
+                console.log('RECEIVED' + res);
                 this.messages = [];
                 this.messages.push(res);
-                if (res.severity == "success") {
+                if (res['severity'] == "success") {
                     this.readCard();
                 } else {
                     this.card = {};
@@ -33,8 +34,9 @@ export class AppComponent {
     }
 
     readCard() {
-        this.principalService.readCard(
+        this.principalService.readCard().then(
             res => { 
+                console.log('CARD' + res);
                 if (res) {
                     this.card = res;
                     this.pinInputField.nativeElement.focus();
