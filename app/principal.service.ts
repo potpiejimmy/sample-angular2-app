@@ -11,13 +11,13 @@ export class PrincipalService {
     constructor (private http: Http) {}
 
     doGet(url) {
-        return this.http.get('http://'+this.URL+url)
+        return this.http.get('https://'+this.URL+url)
                .map(res => res.json())
                .toPromise();
     }
 
     onEvent(url) {
-        let ws = new WebSocket('ws://'+this.URL+url);
+        let ws = new WebSocket('wss://'+this.URL+url);
         return new Observable(observer => {
             ws.onmessage = event => {
                 observer.next(JSON.parse(event.data));
